@@ -21,49 +21,49 @@
                 <span class="icon">▸</span> STATS ALLOCATION
             </h2>
             <div class="info-bar">
-                <span>TOTAL POINTS: <span id="stats-total" class="counter">0</span> / 60</span>
+                <span>TOTAL POINTS: <span id="stats-total" class="counter">0</span> / 57</span>
                 <span id="stats-warning" class="warning hidden">⚠ LIMIT EXCEEDED</span>
             </div>
             
             <div class="stats-grid">
                 <div class="stat-item">
-                    <label for="stat-int">INT</label>
+                    <label for="stat-int">Inteligência (INT)</label>
                     <input type="number" id="stat-int" class="stat-input" min="2" max="8" value="2">
                 </div>
                 <div class="stat-item">
-                    <label for="stat-ref">REF</label>
+                    <label for="stat-ref">Reflexos (REF)</label>
                     <input type="number" id="stat-ref" class="stat-input" min="2" max="8" value="2">
                 </div>
                 <div class="stat-item">
-                    <label for="stat-dex">DEX</label>
+                    <label for="stat-dex">Destreza (DEX)</label>
                     <input type="number" id="stat-dex" class="stat-input" min="2" max="8" value="2">
                 </div>
                 <div class="stat-item">
-                    <label for="stat-tech">TECH</label>
+                    <label for="stat-tech">Técnica (TECH)</label>
                     <input type="number" id="stat-tech" class="stat-input" min="2" max="8" value="2">
                 </div>
                 <div class="stat-item">
-                    <label for="stat-cool">COOL</label>
+                    <label for="stat-cool">Cool (COOL)</label>
                     <input type="number" id="stat-cool" class="stat-input" min="2" max="8" value="2">
                 </div>
                 <div class="stat-item">
-                    <label for="stat-will">WILL</label>
+                    <label for="stat-will">Vontade (WILL)</label>
                     <input type="number" id="stat-will" class="stat-input" min="2" max="8" value="2">
                 </div>
                 <div class="stat-item">
-                    <label for="stat-luck">LUCK</label>
+                    <label for="stat-luck">Sorte (LUCK)</label>
                     <input type="number" id="stat-luck" class="stat-input" min="2" max="8" value="2">
                 </div>
                 <div class="stat-item">
-                    <label for="stat-move">MOVE</label>
+                    <label for="stat-move">Movimento (MOVE)</label>
                     <input type="number" id="stat-move" class="stat-input" min="2" max="8" value="2">
                 </div>
                 <div class="stat-item">
-                    <label for="stat-body">BODY</label>
+                    <label for="stat-body">Corpo (BODY)</label>
                     <input type="number" id="stat-body" class="stat-input" min="2" max="8" value="2">
                 </div>
                 <div class="stat-item">
-                    <label for="stat-emp">EMP</label>
+                    <label for="stat-emp">Empatia (EMP)</label>
                     <input type="number" id="stat-emp" class="stat-input" min="2" max="8" value="2">
                 </div>
             </div>
@@ -114,6 +114,15 @@
         <footer class="footer">
             <p>© 2077 PANDORA SYSTEMS // ALL RIGHTS RESERVED</p>
         </footer>
+    </div>
+
+    <!-- Modal de Descrição -->
+    <div id="skill-modal" class="skill-modal hidden">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h3 id="modal-skill-name"></h3>
+            <p id="modal-skill-description"></p>
+        </div>
     </div>
 
     <script src="script.js"></script>

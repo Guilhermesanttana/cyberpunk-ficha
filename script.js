@@ -1,16 +1,53 @@
 // CYBERPUNK CHARACTER CREATION - SCRIPT
-// Lista completa de habilidades
+// Lista completa de habilidades com descrições
 const AVAILABLE_SKILLS = [
-    'Athletics', 'Brawling', 'Concentration', 'Conversation', 'Dance',
-    'Deduction', 'Drive Land Vehicle', 'Education', 'Evasion', 'First Aid',
-    'Handgun', 'Human Perception', 'Interrogation', 'Language', 'Library Search',
-    'Local Expert', 'Melee Weapon', 'Perception', 'Persuasion', 'Pick Lock',
-    'Pick Pocket', 'Rifle', 'Stealth', 'Streetwise', 'Tactics',
-    'Tracking', 'Trading', 'Wardrobe & Style', 'Wilderness Survival'
+    { name: 'Contabilidade (INT)', description: 'Habilidade de equilibrar livros contábeis, criar ou identificar falsificações, manipular números, elaborar orçamentos e lidar com operações comerciais do dia a dia.' },
+    { name: 'Atuação (COOL)', description: 'Habilidade de assumir papéis, disfarçar-se como outra pessoa (real ou fictícia) e simular emoções e humores.' },
+    { name: 'Atletismo (DEX)', description: 'Habilidade de saltar, escalar, nadar, lançar objetos, levantar pesos e realizar tarefas físicas básicas. Inclui o uso de armas de arremesso.' },
+    { name: 'Briga (DEX)', description: 'Habilidade de lutar e agarrar usando força bruta.' },
+    { name: 'Suborno (COOL)', description: 'Habilidade de saber quando subornar alguém, como abordar a pessoa e quanto oferecer.' },
+    { name: 'Burocracia (INT)', description: 'Habilidade de lidar com burocratas, reduzir entraves e extrair informações de sistemas burocráticos.' },
+    { name: 'Negócios (INT)', description: 'Habilidade relacionada a práticas comerciais básicas, oferta e demanda, gestão de funcionários, compras, vendas e marketing.' },
+    { name: 'Composição (INT)', description: 'Habilidade de escrever músicas, artigos, histórias ou outros conteúdos criativos.' },
+    { name: 'Ocultar/Revelar Objeto (INT)', description: 'Habilidade de esconder objetos ou localizar itens que foram escondidos. Usada também para esconder armas sob as roupas ou detectá-las.' },
+    { name: 'Concentração (WILL)', description: 'Habilidade de foco e controle mental, abrangendo memória, lembrança e controle fisiológico.' },
+    { name: 'Conversa (EMP)', description: 'Habilidade de extrair informações das pessoas sem alertá-las, usando conversas cuidadosas.' },
+    { name: 'Criminologia (INT)', description: 'Habilidade de descobrir pistas por meio de coleta de impressões digitais, testes balísticos, análise de provas e pesquisa em arquivos policiais.' },
+    { name: 'Criptografia (INT)', description: 'Habilidade de codificar e decodificar mensagens.' },
+    { name: 'Dedução (INT)', description: 'Habilidade de reunir pistas para chegar a conclusões complexas ou diagnósticos não óbvios.' },
+    { name: 'Dirigir Veículos Terrestres (REF)', description: 'Habilidade de dirigir e manobrar veículos terrestres.' },
+    { name: 'Educação (INT)', description: 'Habilidade de conhecimento geral equivalente a uma educação básica: leitura, escrita, matemática e noções de história.' },
+    { name: 'Eletrônica/Tecnologia de Segurança (TECH)', description: 'Habilidade de identificar, reparar, neutralizar e instalar dispositivos eletrônicos, computadores, cyberdecks, gadgets e sistemas de segurança.' },
+    { name: 'Evasão (DEX)', description: 'Habilidade de se esquivar de ataques corpo a corpo.' },
+    { name: 'Primeiros Socorros (TECH)', description: 'Habilidade de aplicar tratamentos médicos para impedir que alguém morra ou para tratar ferimentos críticos comuns.' },
+    { name: 'Falsificação (TECH)', description: 'Habilidade de criar e identificar documentos, obras de arte e identificações falsas.' },
+    { name: 'Arma (REF)', description: 'Habilidade de disparar armas de projétil portáteis com precisão.' },
+    { name: 'Percepção Humana (EMP)', description: 'Habilidade de ler expressões faciais e linguagem corporal para identificar emoções, mentiras ou enganos.' },
+    { name: 'Interrogatório (COOL)', description: 'Habilidade de extrair informações de alguém por meio de pressão ou força psicológica.' },
+    { name: 'Pesquisa na Biblioteca (INT)', description: 'Habilidade de usar bancos de dados, Data Pool, bibliotecas e arquivos para encontrar informações.' },
+    { name: 'Especialista Local (INT)', description: 'Habilidade de conhecer profundamente uma área e entender as agendas de suas facções políticas e criminosas.' },
+    { name: 'Armas Brancas (DEX)', description: 'Habilidade de lutar usando armas brancas.' },
+    { name: 'Paramédico (TECH)', description: 'Habilidade de aplicar tratamentos médicos avançados que não exigem cirurgia, impedindo a morte e tratando ferimentos críticos.' },
+    { name: 'Percepção (INT)', description: 'Habilidade de detectar coisas ocultas como pistas, armadilhas e pessoas escondidas (embora não objetos, que usam Ocultar/Revelar Objeto).' },
+    { name: 'Persuasão (COOL)', description: 'Habilidade de convencer, influenciar ou persuadir indivíduos ou grupos.' },
+    { name: 'Fotografia/Cinema (TECH)', description: 'Habilidade de produzir fotografias profissionais, filmes e braindances.' },
+    { name: 'Arrombar Fechaduras (TECH)', description: 'Habilidade de abrir fechaduras não eletrônicas e contornar medidas de segurança mecânicas.' },
+    { name: 'Furto (TECH)', description: 'Habilidade de roubar carteiras e pequenos objetos sem ser notado.' },
+    { name: 'Tocar Instrumento (TECH)', description: 'Habilidade de tocar profissionalmente um instrumento musical.' },
+    { name: 'Resistir à Tortura/Drogas (WILL)', description: 'Habilidade de suportar dor, interrogatórios e efeitos de substâncias químicas.' },
+    { name: 'Armas nos Ombros (REF)', description: 'Habilidade de disparar armas apoiadas no ombro.' },
+    { name: 'Furtividade (DEX)', description: 'Habilidade de mover-se silenciosamente, esconder-se, agir discretamente ou evitar ser detectado.' },
+    { name: 'Conhecimento das Ruas (COOL)', description: 'Habilidade de saber onde conseguir itens ilegais, lidar com criminosos e evitar problemas em áreas perigosas.' },
+    { name: 'Táticas (INT)', description: 'Habilidade de gerir batalhas em larga escala de forma eficiente e antecipar reações inimigas.' },
+    { name: 'Rastreamento (INT)', description: 'Habilidade de seguir rastros por meio de pegadas e outras pistas deixadas para trás.' },
+    { name: 'Negociação (COOL)', description: 'Habilidade de fazer bons acordos, fechar negócios e lidar com clientes ou comerciantes.' },
+    { name: 'Guarda-roupa e Estilo (COOL)', description: 'Habilidade de saber o que vestir, quando vestir e como parecer estiloso em qualquer situação.' },
+    { name: 'Lidar com Animais (INT)', description: 'Habilidade de entender comportamentos animais e controlar ou acalmar criaturas.' },
+    { name: 'Leitura Labial (INT)', description: 'Habilidade de entender conversas observando apenas o movimento dos lábios.' }
 ];
 
 const REQUIRED_SKILLS_COUNT = 12;
-const MAX_STATS_TOTAL = 60;
+const MAX_STATS_TOTAL = 57;
 const MAX_LEVELS_TOTAL = 54;
 const MIN_STAT_VALUE = 2;
 const MAX_STAT_VALUE = 8;
@@ -125,15 +162,26 @@ function initializeSkillsChecklist() {
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.id = `skill-${index}`;
-        checkbox.value = skill;
+        checkbox.value = skill.name;
+        checkbox.dataset.description = skill.description;
         checkbox.addEventListener('change', handleSkillSelection);
         
         const label = document.createElement('label');
         label.htmlFor = `skill-${index}`;
-        label.textContent = skill;
+        label.textContent = skill.name;
+        
+        const infoBtn = document.createElement('span');
+        infoBtn.className = 'info-icon';
+        infoBtn.textContent = 'ℹ';
+        infoBtn.title = 'Ver descrição';
+        infoBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showSkillDescription(skill.name, skill.description);
+        });
         
         skillDiv.appendChild(checkbox);
         skillDiv.appendChild(label);
+        skillDiv.appendChild(infoBtn);
         checklistContainer.appendChild(skillDiv);
     });
 }
@@ -300,6 +348,44 @@ function initializeExportButton() {
     exportBtn.addEventListener('click', exportToJSON);
 }
 
+// ============================================
+// MODAL DE DESCRIÇÃO DAS HABILIDADES
+// ============================================
+function showSkillDescription(skillName, description) {
+    const modal = document.getElementById('skill-modal');
+    const modalTitle = document.getElementById('modal-skill-name');
+    const modalDescription = document.getElementById('modal-skill-description');
+    
+    modalTitle.textContent = skillName;
+    modalDescription.textContent = description;
+    modal.classList.remove('hidden');
+}
+
+function closeModal() {
+    const modal = document.getElementById('skill-modal');
+    modal.classList.add('hidden');
+}
+
+// Event listeners para o modal
+document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('skill-modal');
+    const closeBtn = document.querySelector('.modal-close');
+    
+    closeBtn.addEventListener('click', closeModal);
+    
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+    
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeModal();
+        }
+    });
+});
+
 function exportToJSON() {
     const errorElement = document.getElementById('export-error');
     
@@ -309,6 +395,19 @@ function exportToJSON() {
     
     if (!statsValid) {
         errorElement.textContent = 'ERRO: Corrija os problemas na seção de STATS antes de exportar.';
+        errorElement.classList.remove('hidden');
+        return;
+    }
+    
+    // Verificar se todos os pontos de STATS foram distribuídos
+    const allStatInputs = document.querySelectorAll('.stat-input');
+    let statsTotal = 0;
+    allStatInputs.forEach(input => {
+        statsTotal += parseInt(input.value) || MIN_STAT_VALUE;
+    });
+    
+    if (statsTotal < MAX_STATS_TOTAL) {
+        errorElement.textContent = `ERRO: Você ainda tem ${MAX_STATS_TOTAL - statsTotal} pontos de STATS disponíveis. Distribua todos os pontos antes de exportar.`;
         errorElement.classList.remove('hidden');
         return;
     }
@@ -323,6 +422,21 @@ function exportToJSON() {
         errorElement.textContent = 'ERRO: Corrija os problemas na distribuição de NÍVEIS antes de exportar.';
         errorElement.classList.remove('hidden');
         return;
+    }
+    
+    // Verificar se todos os pontos de NÍVEIS foram distribuídos
+    const allLevelInputs = document.querySelectorAll('.level-input');
+    if (allLevelInputs.length > 0) {
+        let levelsTotal = 0;
+        allLevelInputs.forEach(input => {
+            levelsTotal += parseInt(input.value) || MIN_STAT_VALUE;
+        });
+        
+        if (levelsTotal < MAX_LEVELS_TOTAL) {
+            errorElement.textContent = `ERRO: Você ainda tem ${MAX_LEVELS_TOTAL - levelsTotal} pontos de NÍVEIS disponíveis. Distribua todos os pontos antes de exportar.`;
+            errorElement.classList.remove('hidden');
+            return;
+        }
     }
     
     errorElement.classList.add('hidden');
