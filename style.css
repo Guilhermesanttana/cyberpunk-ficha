@@ -676,11 +676,11 @@ body {
 @media (max-width: 768px) {
     .floating-counter {
         top: auto;
-        bottom: 20px;
+        bottom: 15px;
         right: 50%;
         transform: translateX(50%);
-        min-width: 280px;
-        padding: 12px 15px;
+        min-width: 180px;
+        padding: 8px 12px;
     }
     
     @keyframes slideInRight {
@@ -695,15 +695,22 @@ body {
     }
     
     .counter-title {
-        font-size: 0.8rem;
+        font-size: 0.65rem;
+        margin-bottom: 6px;
+    }
+    
+    .counter-stats,
+    .counter-skills {
+        padding: 5px 8px;
+        margin: 3px 0;
     }
     
     .counter-label {
-        font-size: 0.75rem;
+        font-size: 0.65rem;
     }
     
     .counter-value {
-        font-size: 1.3rem;
+        font-size: 1.1rem;
     }
 }
 
