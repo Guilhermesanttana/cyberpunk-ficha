@@ -62,6 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeStats();
     initializeSkillsChecklist();
     initializeExportButton();
+    updateFloatingCounter();
 });
 
 // ============================================
@@ -120,18 +121,36 @@ function validateStats() {
     
     // Atualizar display do total
     totalElement.textContent = total;
-    totalElement.style.color = total > MAX_STATS_TOTAL ? 'var(--error-color)' : 'var(--neon-cyan)';
+    
+    // Atualizar cor baseado no total
+    if (total === MAX_STATS_TOTAL) {
+        totalElement.style.color = 'var(--neon-yellow)';
+    } else if (total > MAX_STATS_TOTAL) {
+        totalElement.style.color = 'var(--error-color)';
+    } else {
+        totalElement.style.color = 'var(--neon-cyan)';
+    }
     
     // Mostrar/esconder aviso de limite
     if (total > MAX_STATS_TOTAL) {
+        warningElement.textContent = '⚠ LIMITE EXCEDIDO';
+        warningElement.style.color = 'var(--error-color)';
         warningElement.classList.remove('hidden');
         errors.push(`Total de pontos (${total}) excede o máximo permitido (${MAX_STATS_TOTAL})`);
+    } else if (total === MAX_STATS_TOTAL) {
+        warningElement.textContent = '✓ PONTOS COMPLETOS';
+        warningElement.style.color = 'var(--neon-yellow)';
+        warningElement.classList.remove('hidden');
     } else if (total > MAX_STATS_TOTAL - 5) {
         warningElement.textContent = '⚠ PRÓXIMO DO LIMITE';
+        warningElement.style.color = 'var(--warning-color)';
         warningElement.classList.remove('hidden');
     } else {
         warningElement.classList.add('hidden');
     }
+    
+    // Atualizar contador flutuante
+    updateFloatingCounter();
     
     // Verificar regra de apenas 1 atributo pode ser 8
     if (eightCount > MAX_EIGHT_COUNT) {
@@ -311,18 +330,36 @@ function validateLevels() {
     
     // Atualizar display do total
     totalElement.textContent = total;
-    totalElement.style.color = total > MAX_LEVELS_TOTAL ? 'var(--error-color)' : 'var(--neon-cyan)';
+    
+    // Atualizar cor baseado no total
+    if (total === MAX_LEVELS_TOTAL) {
+        totalElement.style.color = 'var(--neon-yellow)';
+    } else if (total > MAX_LEVELS_TOTAL) {
+        totalElement.style.color = 'var(--error-color)';
+    } else {
+        totalElement.style.color = 'var(--neon-cyan)';
+    }
     
     // Avisos
     if (total > MAX_LEVELS_TOTAL) {
+        warningElement.textContent = '⚠ LIMITE EXCEDIDO';
+        warningElement.style.color = 'var(--error-color)';
         warningElement.classList.remove('hidden');
         errors.push(`Total de níveis (${total}) excede o máximo permitido (${MAX_LEVELS_TOTAL})`);
+    } else if (total === MAX_LEVELS_TOTAL) {
+        warningElement.textContent = '✓ PONTOS COMPLETOS';
+        warningElement.style.color = 'var(--neon-yellow)';
+        warningElement.classList.remove('hidden');
     } else if (total > MAX_LEVELS_TOTAL - 5) {
         warningElement.textContent = '⚠ PRÓXIMO DO LIMITE';
+        warningElement.style.color = 'var(--warning-color)';
         warningElement.classList.remove('hidden');
     } else {
         warningElement.classList.add('hidden');
     }
+    
+    // Atualizar contador flutuante
+    updateFloatingCounter();
     
     // Verificar regra de apenas 1 habilidade pode ser 8
     if (eightCount > MAX_EIGHT_COUNT) {
@@ -346,6 +383,59 @@ function validateLevels() {
 function initializeExportButton() {
     const exportBtn = document.getElementById('export-btn');
     exportBtn.addEventListener('click', exportToJSON);
+}
+
+// ============================================
+// CONTADOR FLUTUANTE DE PONTOS RESTANTES
+// ============================================
+function updateFloatingCounter() {
+    const statsRemainingElement = document.getElementById('remaining-stats');
+    const skillsRemainingElement = document.getElementById('remaining-skills');
+    
+    // Calcular pontos restantes de STATS
+    const statInputs = document.querySelectorAll('.stat-input');
+    let statsTotal = 0;
+    statInputs.forEach(input => {
+        statsTotal += parseInt(input.value) || MIN_STAT_VALUE;
+    });
+    const statsRemaining = MAX_STATS_TOTAL - statsTotal;
+    
+    // Calcular pontos restantes de NÍVEIS
+    const levelInputs = document.querySelectorAll('.level-input');
+    let levelsTotal = 0;
+    if (levelInputs.length > 0) {
+        levelInputs.forEach(input => {
+            levelsTotal += parseInt(input.value) || MIN_STAT_VALUE;
+        });
+    }
+    const skillsRemaining = MAX_LEVELS_TOTAL - levelsTotal;
+    
+    // Atualizar display
+    statsRemainingElement.textContent = statsRemaining;
+    skillsRemainingElement.textContent = skillsRemaining;
+    
+    // Aplicar cores baseado nos valores
+    if (statsRemaining === 0) {
+        statsRemainingElement.style.color = 'var(--neon-yellow)';
+        statsRemainingElement.parentElement.style.borderColor = 'var(--neon-yellow)';
+    } else if (statsRemaining < 0) {
+        statsRemainingElement.style.color = 'var(--error-color)';
+        statsRemainingElement.parentElement.style.borderColor = 'var(--error-color)';
+    } else {
+        statsRemainingElement.style.color = 'var(--neon-cyan)';
+        statsRemainingElement.parentElement.style.borderColor = 'var(--neon-cyan)';
+    }
+    
+    if (skillsRemaining === 0) {
+        skillsRemainingElement.style.color = 'var(--neon-yellow)';
+        skillsRemainingElement.parentElement.style.borderColor = 'var(--neon-yellow)';
+    } else if (skillsRemaining < 0) {
+        skillsRemainingElement.style.color = 'var(--error-color)';
+        skillsRemainingElement.parentElement.style.borderColor = 'var(--error-color)';
+    } else {
+        skillsRemainingElement.style.color = 'var(--neon-cyan)';
+        skillsRemainingElement.parentElement.style.borderColor = 'var(--neon-cyan)';
+    }
 }
 
 // ============================================
@@ -389,12 +479,12 @@ document.addEventListener('DOMContentLoaded', () => {
 function exportToJSON() {
     const errorElement = document.getElementById('export-error');
     
-    // Validar tudo antes de exportar
+    // Validar tudo antes de enviar
     const statsValid = validateStats();
     const levelsValid = validateLevels();
     
     if (!statsValid) {
-        errorElement.textContent = 'ERRO: Corrija os problemas na seção de STATS antes de exportar.';
+        errorElement.textContent = 'ERRO: Corrija os problemas na seção de STATS antes de enviar.';
         errorElement.classList.remove('hidden');
         return;
     }
@@ -407,7 +497,7 @@ function exportToJSON() {
     });
     
     if (statsTotal < MAX_STATS_TOTAL) {
-        errorElement.textContent = `ERRO: Você ainda tem ${MAX_STATS_TOTAL - statsTotal} pontos de STATS disponíveis. Distribua todos os pontos antes de exportar.`;
+        errorElement.textContent = `ERRO: Você ainda tem ${MAX_STATS_TOTAL - statsTotal} pontos de STATS disponíveis. Distribua todos os pontos antes de enviar.`;
         errorElement.classList.remove('hidden');
         return;
     }
@@ -419,7 +509,7 @@ function exportToJSON() {
     }
     
     if (!levelsValid) {
-        errorElement.textContent = 'ERRO: Corrija os problemas na distribuição de NÍVEIS antes de exportar.';
+        errorElement.textContent = 'ERRO: Corrija os problemas na distribuição de NÍVEIS antes de enviar.';
         errorElement.classList.remove('hidden');
         return;
     }
@@ -433,7 +523,7 @@ function exportToJSON() {
         });
         
         if (levelsTotal < MAX_LEVELS_TOTAL) {
-            errorElement.textContent = `ERRO: Você ainda tem ${MAX_LEVELS_TOTAL - levelsTotal} pontos de NÍVEIS disponíveis. Distribua todos os pontos antes de exportar.`;
+            errorElement.textContent = `ERRO: Você ainda tem ${MAX_LEVELS_TOTAL - levelsTotal} pontos de NÍVEIS disponíveis. Distribua todos os pontos antes de enviar.`;
             errorElement.classList.remove('hidden');
             return;
         }
@@ -459,8 +549,14 @@ function exportToJSON() {
         });
     });
     
+    // Coletar informações do jogador e personagem
+    const playerName = document.getElementById('player-name').value.trim() || 'Sem nome';
+    const characterName = document.getElementById('character-name').value.trim() || 'Sem nome';
+    
     // Montar objeto final
     const characterData = {
+        player: playerName,
+        character: characterName,
         stats: stats,
         skills: skills,
         metadata: {
@@ -470,23 +566,36 @@ function exportToJSON() {
         }
     };
     
-    // Criar e baixar arquivo JSON
+    // Criar mensagem formatada para WhatsApp
     const jsonString = JSON.stringify(characterData, null, 2);
-    const blob = new Blob([jsonString], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
     
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `cyberpunk-character-${Date.now()}.json`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+    let message = `🎮 *CYBERPUNK RED - FICHA DE PERSONAGEM*\n\n`;
+    message += `👤 *Jogador:* ${playerName}\n`;
+    message += `🎭 *Personagem:* ${characterName}\n\n`;
+    message += `📊 *STATS:*\n`;
+    
+    Object.entries(stats).forEach(([stat, value]) => {
+        message += `   • ${stat}: ${value}\n`;
+    });
+    
+    message += `\n🎯 *HABILIDADES:*\n`;
+    skills.forEach(skill => {
+        message += `   • ${skill.name}: ${skill.level}\n`;
+    });
+    
+    message += `\n📦 *Dados completos em JSON:*\n\`\`\`${jsonString}\`\`\``;
+    
+    // Codificar a mensagem para URL
+    const encodedMessage = encodeURIComponent(message);
+    
+    // Abrir WhatsApp com a mensagem
+    const whatsappUrl = `https://wa.me/?text=${encodedMessage}`;
+    window.open(whatsappUrl, '_blank');
     
     // Feedback visual
     const exportBtn = document.getElementById('export-btn');
     const originalText = exportBtn.innerHTML;
-    exportBtn.innerHTML = '<span class="btn-text">✓ EXPORTED SUCCESSFULLY</span>';
+    exportBtn.innerHTML = '<span class="btn-text">✓ ENVIADO AO WHATSAPP</span>';
     exportBtn.style.borderColor = 'var(--neon-yellow)';
     exportBtn.style.color = 'var(--neon-yellow)';
     

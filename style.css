@@ -232,6 +232,55 @@ body {
     50% { opacity: 0.5; }
 }
 
+/* Info Inputs Grid */
+.info-inputs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.info-input-item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.info-input-item label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+    color: var(--neon-magenta);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.info-input {
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid var(--neon-cyan);
+    border-radius: 5px;
+    padding: 15px;
+    color: var(--text-primary);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.info-input::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.6;
+}
+
+.info-input:focus {
+    outline: none;
+    border-color: var(--neon-magenta);
+    box-shadow: 
+        0 0 10px var(--neon-magenta),
+        inset 0 0 10px rgba(255, 0, 255, 0.2);
+}
+
+.info-input:hover {
+    border-color: var(--neon-yellow);
+}
+
 /* Stats Grid */
 .stats-grid {
     display: grid;
@@ -554,6 +603,108 @@ body {
 ::selection {
     background: var(--neon-magenta);
     color: var(--dark-bg);
+}
+
+/* Contador Flutuante de Pontos Restantes */
+.floating-counter {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--panel-bg);
+    border: 2px solid var(--neon-cyan);
+    border-radius: 10px;
+    padding: 15px 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 
+        0 0 20px rgba(0, 240, 255, 0.3),
+        inset 0 0 20px rgba(0, 240, 255, 0.05);
+    z-index: 9998;
+    min-width: 200px;
+    animation: slideInRight 0.5s ease;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.counter-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+    color: var(--neon-magenta);
+    text-align: center;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+    text-shadow: 0 0 5px var(--neon-magenta);
+}
+
+.counter-stats,
+.counter-skills {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    margin: 5px 0;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--neon-cyan);
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.counter-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.counter-value {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--neon-cyan);
+    text-shadow: 0 0 10px currentColor;
+    transition: all 0.3s ease;
+}
+
+/* Mobile - Reposicionar o contador */
+@media (max-width: 768px) {
+    .floating-counter {
+        top: auto;
+        bottom: 20px;
+        right: 50%;
+        transform: translateX(50%);
+        min-width: 280px;
+        padding: 12px 15px;
+    }
+    
+    @keyframes slideInRight {
+        from {
+            transform: translateX(50%) translateY(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(50%) translateY(0);
+            opacity: 1;
+        }
+    }
+    
+    .counter-title {
+        font-size: 0.8rem;
+    }
+    
+    .counter-label {
+        font-size: 0.75rem;
+    }
+    
+    .counter-value {
+        font-size: 1.3rem;
+    }
 }
 
 /* Modal de Descrição das Habilidades */

@@ -9,11 +9,42 @@
 <body>
     <div class="glitch-overlay"></div>
     
+    <!-- Contador Flutuante de Pontos Restantes -->
+    <div id="floating-counter" class="floating-counter">
+        <div class="counter-title">PONTOS RESTANTES</div>
+        <div class="counter-stats">
+            <span class="counter-label">STATS:</span>
+            <span id="remaining-stats" class="counter-value">57</span>
+        </div>
+        <div class="counter-skills">
+            <span class="counter-label">NÍVEIS:</span>
+            <span id="remaining-skills" class="counter-value">54</span>
+        </div>
+    </div>
+    
     <div class="container">
         <header class="header">
             <h1 class="title glitch" data-text="CYBERPUNK">CYBERPUNK</h1>
             <p class="subtitle">CHARACTER CREATION TERMINAL v2.077</p>
         </header>
+
+        <!-- SEÇÃO DE INFORMAÇÕES INICIAIS -->
+        <section class="section" id="info-section">
+            <h2 class="section-title">
+                <span class="icon">▸</span> PLAYER & CHARACTER INFO
+            </h2>
+            
+            <div class="info-inputs-grid">
+                <div class="info-input-item">
+                    <label for="player-name">NOME DO JOGADOR</label>
+                    <input type="text" id="player-name" class="info-input" placeholder="Digite seu nome..." maxlength="50">
+                </div>
+                <div class="info-input-item">
+                    <label for="character-name">NOME DO PERSONAGEM</label>
+                    <input type="text" id="character-name" class="info-input" placeholder="Digite o nome do personagem..." maxlength="50">
+                </div>
+            </div>
+        </section>
 
         <!-- SEÇÃO DE ATRIBUTOS -->
         <section class="section" id="stats-section">
@@ -102,11 +133,11 @@
             <div id="levels-error" class="error-message hidden"></div>
         </section>
 
-        <!-- BOTÃO DE EXPORTAR -->
+        <!-- BOTÃO DE ENVIAR -->
         <section class="export-section">
             <button id="export-btn" class="export-btn">
-                <span class="btn-text">EXPORT TO JSON</span>
-                <span class="btn-glitch">EXPORT TO JSON</span>
+                <span class="btn-text">MANDA PO GUINOMO</span>
+                <span class="btn-glitch">MANDA PO GUINOMO</span>
             </button>
             <div id="export-error" class="error-message hidden"></div>
         </section>
