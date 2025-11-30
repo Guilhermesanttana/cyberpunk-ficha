@@ -2,7 +2,7 @@
 
 Uma Single Page Application (SPA) temática cyberpunk para criação parcial de personagens do Cyberpunk RED.
 
-🌐 **[Acesse a aplicação aqui](https://cyberpunk-pandora.netlify.app/)**
+🌐 **<a href="https://cyberpunk-pandora.netlify.app/" target="_blank">Acesse a aplicação aqui</a>**
 
 ## 📸 Preview
 
